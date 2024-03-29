@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Array med unika slumpmässiga tal</h2>
+<p id="randomArray"></p>
+<p id="sortedArray"></p>
+
+<h2>Formulär med JavaScript-validering</h2>
+<form id="jsForm">
+    Användarnamn: <input type="text" id="username" required><br>
+    Lösenord: <input type="password" id="password" required minlength="6"><br>
+    Bekräfta lösenord: <input type="password" id="confirmPassword" required><br>
+    E-post: <input type="email" id="email" required><br>
+    Jag accepterar villkoren: <input type="checkbox" id="terms" required><br>
+    <input type="submit" value="Registrera">
+</form>
+<p id="jsFormError"></p>
+
+<h2>Formulär med HTML5-validering</h2>
+<form id="htmlForm">
+  Användarnamn: <input type="text" id="htmlUsername" required><br>
+  Lösenord: <input type="password" id="htmlPassword" required minlength="6"><br>
+  E-post: <input type="email" id="htmlEmail" required><br>
+  Jag accepterar villkoren: <input type="checkbox" id="htmlTerms" required><br>
+  <input type="submit" value="Registrera">
+</form>
+<p id="htmlFormError"></p>
+
+
+
+<script>
+// Funktion för att generera ett slumpmässigt tal mellan min och max
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Funktion för att skapa en array med unika slumpmässiga tal
+function createRandomArray() {
+    let arr = [];
+    while (arr.length < 10) {
+        let r = getRandomInt(1, 100);
+        if (arr.indexOf(r) === -1) arr.push(r);
+    }
+    return arr;
+}
+
+// Skapa och skriv ut arrayen
+const randomArray = createRandomArray();
+document.getElementById("randomArray").innerHTML = "Osorterad array: " + randomArray;
+randomArray.sort(function(a, b){return a-b});
+document.getElementById("sortedArray").innerHTML = "Sorterad array: " + randomArray;
+
+// Funktion för att validera JavaScript-formuläret
+document.getElementById("jsForm").addEventListener("submit", function(event){
+    event.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const email = document.getElementById("email").value;
+    const terms = document.getElementById("terms").checked;
+    if (password !== confirmPassword) {
+        document.getElementById("jsFormError").innerHTML = "Lösenorden matchar inte.";
+    } else if (email.indexOf("@") === -1 || email.indexOf("@") === 0 || email.indexOf("@") === email.length-1) {
+        document.getElementById("jsFormError").innerHTML = "Ogiltig e-postadress.";
+    } else if (!terms) {
+        document.getElementById("jsFormError").innerHTML = "Du måste acceptera villkoren.";
+    } else {
+        window.location.href = "thankyou.html";
+    }
+});
+</script>
+
+</body>
+</html>
