@@ -1,121 +1,60 @@
-// Function to generate a unique random number array
+const RANDOM_ARRAY_LENGTH = 10;
+const RANDOM_NUMBER_RANGE = 100;
+const MIN_PASSWORD_LENGTH = 6;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function generateUniqueRandomNumber() {
+    return Math.floor(Math.random() * RANDOM_NUMBER_RANGE) + 1;
+}
+
 function generateUniqueRandomArray() {
     let arr = [];
-    while(arr.length < 10){
-        let r = Math.floor(Math.random() * 100) + 1;
-        if(arr.indexOf(r) === -1) arr.push(r);
+    while(arr.length < RANDOM_ARRAY_LENGTH){
+        let r = generateUniqueRandomNumber();
+        if(!arr.includes(r)) arr.push(r);
     }
     return arr;
 }
 
-// Generate the array and display it
-let randomArray = generateUniqueRandomArray();
-document.getElementById("randomArray").innerHTML = "Unsorted: " + randomArray.join(", ");
+function displayArray(id, array, message) {
+    document.getElementById(id).innerHTML = `${message}: ${array.join(", ")}`;
+}
 
-// Sort and display the array
-let sortedArray = randomArray.slice().sort((a, b) => a - b);
-document.getElementById("sortedArray").innerHTML = "Sorted: " + sortedArray.join(", ");
-
-// Function to validate JavaScript form
-document.getElementById("jsForm").addEventListener("submit", function(event){
-    event.preventDefault();
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    const email = document.getElementById("email").value;
-    const terms = document.getElementById("terms").checked;
-    
-    // Clear previous error message
-    document.getElementById("jsFormError").innerHTML = "";
-
-    if (!username) {
-        document.getElementById("jsFormError").innerHTML = "Användarnamn är obligatoriskt.";
-        return;
-    }
-    if (!password) {
-        document.getElementById("jsFormError").innerHTML = "Lösenord är obligatoriskt.";
-        return;
-    }
-    if (password.length < 6) {
-        document.getElementById("jsFormError").innerHTML = "Lösenordet måste vara minst 6 tecken.";
-        return;
-    }
-    if (password !== confirmPassword) {
-        document.getElementById("jsFormError").innerHTML = "Lösenorden matchar inte.";
-        return;
-    }
-    if (!email) {
-        document.getElementById("jsFormError").innerHTML = "E-post är obligatoriskt.";
-        return;
-    }
-    // Use a regular expression to validate the email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        document.getElementById("jsFormError").innerHTML = "Ogiltig e-postadress.";
-        return;
-    }
-    if (!terms) {
-        document.getElementById("jsFormError").innerHTML = "Du måste acceptera villkoren.";
-        return;
-    }
-    window.location.href = "thankyou.html";
-});
-
-// Function to validate HTML5 form with custom error messages
-document.getElementById("htmlForm").addEventListener("submit", function(event){
-    // Clear previous error messages
-    const errorElements = document.querySelectorAll('.error');
-    errorElements.forEach(element => {
-        element.textContent = '';
-    });
-
-    // Check validity of each input
-    const inputs = this.querySelectorAll('input[required]');
-    let isValid = true;
-    inputs.forEach(input => {
-        if (!input.checkValidity()) {
-            const errorMessage = input.validationMessage;
-            const errorFieldId = input.id + "Error";
-            document.getElementById(errorFieldId).textContent = errorMessage;
-            isValid = false;
-        }
-    });
-
-    if (!isValid) {
-        event.preventDefault(); // Prevent form submission if any field is invalid
-    } else {
+function validateForm(formId, errorId, validationFunctions) {
+    document.getElementById(formId).addEventListener("submit", function(event){
         event.preventDefault();
-        const username = document.getElementById("htmlUsername").value;
-        const password = document.getElementById("htmlPassword").value;
-        const email = document.getElementById("htmlEmail").value;
-        const terms = document.getElementById("htmlTerms").checked;
-
-        if (!username) {
-            document.getElementById("htmlUsernameError").textContent = "Please fill out this field.";
-            return;
-        }
-        if (!password) {
-            document.getElementById("htmlPasswordError").textContent = "Please fill out this field.";
-            return;
-        }
-        if (password.length < 6) {
-            document.getElementById("htmlPasswordError").textContent = "Password has to be at least 6 characters.";
-            return;
-        }
-        if (!email) {
-            document.getElementById("htmlEmailError").textContent = "Please fill out this field.";
-            return;
-        }
-        // Use a regular expression to validate the email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            document.getElementById("htmlEmailError").textContent = "Please include an '@' in the email address.";
-            return;
-        }
-        if (!terms) {
-            document.getElementById("htmlTermsError").textContent = "Please check this box if you want to proceed.";
-            return;
+        document.getElementById(errorId).innerHTML = "";
+        for (let validate of validationFunctions) {
+            let errorMessage = validate();
+            if (errorMessage) {
+                document.getElementById(errorId).innerHTML = errorMessage;
+                return;
+            }
         }
         window.location.href = "thankyou.html";
-    }
-});
+    });
+}
+
+let randomArray = generateUniqueRandomArray();
+displayArray("randomArray", randomArray, "Unsorted");
+let sortedArray = [...randomArray].sort((a, b) => a - b);
+displayArray("sortedArray", sortedArray, "Sorted");
+
+validateForm("jsForm", "jsFormError", [
+    () => !document.getElementById("username").value && "Användarnamn är obligatoriskt.",
+    () => !document.getElementById("password").value && "Lösenord är obligatoriskt.",
+    () => document.getElementById("password").value.length < MIN_PASSWORD_LENGTH && "Lösenordet måste vara minst 6 tecken.",
+    () => document.getElementById("password").value !== document.getElementById("confirmPassword").value && "Lösenorden matchar inte.",
+    () => !document.getElementById("email").value && "E-post är obligatoriskt.",
+    () => !EMAIL_REGEX.test(document.getElementById("email").value) && "Ogiltig e-postadress.",
+    () => !document.getElementById("terms").checked && "Du måste acceptera villkoren."
+]);
+
+validateForm("htmlForm", "htmlFormError", [
+    () => !document.getElementById("htmlUsername").value && "Please fill out this field.",
+    () => !document.getElementById("htmlPassword").value && "Please fill out this field.",
+    () => document.getElementById("htmlPassword").value.length < MIN_PASSWORD_LENGTH && "Password has to be at least 6 characters.",
+    () => !document.getElementById("htmlEmail").value && "Please fill out this field.",
+    () => !EMAIL_REGEX.test(document.getElementById("htmlEmail").value) && "Please include an '@' in the email address.",
+    () => !document.getElementById("htmlTerms").checked && "Please check this box if you want to proceed."
+]);
