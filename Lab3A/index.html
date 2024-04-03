@@ -2,8 +2,10 @@
 <html>
 <head>
     <title>Form Validation</title>
+    <meta charset="UTF-8">
 </head>
 <body>
+    <h1>Form Validation</h1>
 
 <h2>Array med unika slumpmässiga tal</h2>
 <p id="randomArray"></p>
@@ -47,6 +49,24 @@
 <p id="htmlFormError"></p>
 
 <script>
+// Function to generate a unique random number array
+function generateUniqueRandomArray() {
+    let arr = [];
+    while(arr.length < 10){
+        let r = Math.floor(Math.random() * 100) + 1;
+        if(arr.indexOf(r) === -1) arr.push(r);
+    }
+    return arr;
+}
+
+// Generate the array and display it
+let randomArray = generateUniqueRandomArray();
+document.getElementById("randomArray").innerHTML = "Unsorted: " + randomArray.join(", ");
+
+// Sort and display the array
+let sortedArray = randomArray.slice().sort((a, b) => a - b);
+document.getElementById("sortedArray").innerHTML = "Sorted: " + sortedArray.join(", ");
+
 // Function to validate JavaScript form
 document.getElementById("jsForm").addEventListener("submit", function(event){
     event.preventDefault();
