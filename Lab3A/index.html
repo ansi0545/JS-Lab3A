@@ -8,12 +8,38 @@
 <body>
     <h1>Form Validation</h1>
 
+    <!--
+        This section displays an array of unique random numbers.
+
+        HTML Structure:
+        - <section id="randomNumberSection">: The container section for the random number array.
+            - <h2>Array med unika slumpmässiga tal</h2>: The heading for the section.
+            - <p id="randomArray"></p>: Placeholder for displaying the random number array.
+            - <p id="sortedArray"></p>: Placeholder for displaying the sorted array.
+    -->
     <section id="randomNumberSection">
         <h2>Array med unika slumpmässiga tal</h2>
         <p id="randomArray"></p>
         <p id="sortedArray"></p>
     </section>
 
+    <!--
+        This section contains a form with JavaScript validation.
+
+        The form has the following fields:
+        - Användarnamn: A text input field with the id "username".
+        - Lösenord: A password input field with the id "password".
+        - Bekräfta lösenord: A password input field with the id "confirmPassword".
+        - E-post: A text input field with the id "email".
+        - Jag accepterar villkoren: A checkbox input field with the id "terms".
+        - Registrera: A submit button.
+
+        The form also includes an empty paragraph element with the id "jsFormError" that can be used to display any validation errors.
+
+        This form is intended to be used for user registration and includes JavaScript validation to ensure that the required fields are filled out correctly.
+
+        Note: The JavaScript validation logic is not included in this code snippet, it is in a separate file script.js.
+    -->
     <section id="jsFormSection">
         <h2>Formulär med JavaScript-validering</h2>
         <form id="jsForm">
@@ -27,6 +53,20 @@
         <p id="jsFormError"></p>
     </section>
 
+    <!--
+        This HTML file contains a form with HTML5 validation.
+        The form allows users to input their username, password, email, and accept terms and conditions.
+        The form is wrapped inside a section with the id "htmlFormSection".
+        The form itself has the id "htmlForm" and has the "novalidate" attribute to disable browser validation.
+        Each input field is wrapped inside a div element with a corresponding label and error message span.
+        The username input field has the id "htmlUsername" and is required.
+        The password input field has the id "htmlPassword" and is required.
+        The email input field has the id "htmlEmail" and is required.
+        The terms and conditions checkbox has the id "htmlTerms" and is required.
+        The form also includes a submit button with the value "Registrera".
+        The form error message is displayed inside a paragraph element with the id "htmlFormError".
+        The JavaScript file "script.js" is included at the end of the HTML file.
+    -->
     <section id="htmlFormSection">
         <h2>Formulär med HTML5-validering</h2>
         <form id="htmlForm" novalidate>

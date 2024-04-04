@@ -5,8 +5,14 @@ body {
     background-color: #f0f0f0;
 }
 
-h1, h2 {
+h1 {
     color: #333;
+    font-size: 1.5em; 
+}
+
+h2 {
+    color: #333;
+    font-size: 1em; 
 }
 
 section {
@@ -48,8 +54,4 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #0056b3;
-}
-
-.error {
-    color: red;
 }
