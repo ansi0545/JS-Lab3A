@@ -69,27 +69,19 @@
     -->
     <section id="htmlFormSection">
         <h2>Formulär med HTML5-validering</h2>
-        <form id="htmlForm" novalidate>
-            <div>
-                <label for="htmlUsername">Användarnamn:</label>
-                <input type="text" id="htmlUsername" required>
-                <span id="htmlUsernameError" class="error"></span>
-            </div>
-            <div>
-                <label for="htmlPassword">Lösenord:</label>
-                <input type="password" id="htmlPassword" required>
-                <span id="htmlPasswordError" class="error"></span>
-            </div>
-            <div>
-                <label for="htmlEmail">E-post:</label>
-                <input type="email" id="htmlEmail" required>
-                <span id="htmlEmailError" class="error"></span>
-            </div>
-            <div>
-                <label for="htmlTerms">Jag accepterar villkoren:</label>
-                <input type="checkbox" id="htmlTerms" required>
-                <span id="htmlTermsError" class="error"></span>
-            </div>
+        <form id="htmlForm" action="thankyou.html" method="post" novalidate>
+            <label for="htmlUsername">Användarnamn:</label>
+            <input id="htmlUsername" type="text" required>
+            <br>
+            <label for="htmlPassword">Lösenord:</label>
+            <input id="htmlPassword" type="password" minlength="6" required>
+            <br>
+            <label for="htmlEmail">E-post:</label>
+            <input id="htmlEmail" type="email" required>
+            <br>
+            <label for="htmlTerms">Jag accepterar villkoren</label>
+            <input id="htmlTerms" type="checkbox" required>
+            <br>
             <input type="submit" value="Registrera">
         </form>
         <p id="htmlFormError"></p>

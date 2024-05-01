@@ -85,10 +85,10 @@ validateForm("jsForm", "jsFormError", [
 
 
 validateForm("htmlForm", "htmlFormError", [
-    () => !document.getElementById("htmlUsername").value && "Please fill out this field.",
-    () => !document.getElementById("htmlPassword").value && "Please fill out this field.",
-    () => document.getElementById("htmlPassword").value.length < MIN_PASSWORD_LENGTH && "Password has to be at least 6 characters.",
-    () => !document.getElementById("htmlEmail").value && "Please fill out this field.",
-    () => !EMAIL_REGEX.test(document.getElementById("htmlEmail").value) && "Please include an '@' in the email address.",
-    () => !document.getElementById("htmlTerms").checked && "Please check this box if you want to proceed."
+    () => !document.getElementById("htmlUsername").value && "Användarnamn är obligatoriskt.",
+    () => !document.getElementById("htmlPassword").value && "Lösenord är obligatoriskt.",
+    () => document.getElementById("htmlPassword").value.length < MIN_PASSWORD_LENGTH && "Lösenordet måste vara minst 6 tecken.",
+    () => !document.getElementById("htmlEmail").value && "E-post är obligatoriskt.",
+    () => !EMAIL_REGEX.test(document.getElementById("htmlEmail").value) && "Ogiltig e-postadress.",
+    () => !document.getElementById("htmlTerms").checked && "Du måste acceptera villkoren."
 ]);
